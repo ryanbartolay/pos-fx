@@ -57,7 +57,6 @@ public class Main extends Application {
         actiontarget.setId("actiontarget");
 
         btn.setOnAction(new EventHandler<ActionEvent>() {
-
             @Override
             public void handle(ActionEvent e) {
                 actiontarget.setText("Sign in button pressed");
