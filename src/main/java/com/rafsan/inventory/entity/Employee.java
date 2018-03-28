@@ -15,19 +15,19 @@ public class Employee implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column(name = "firstname")
+    @Column(name = "firstname", nullable=false)
     private String firstName;
-    @Column(name = "lastname")
+    @Column(name = "lastname", nullable=false)
     private String lastName;
-    @Column(name = "username")
+    @Column(name = "username", nullable=false, unique=true)
     private String userName;
-    @Column(name = "password")
+    @Column(name = "password", nullable=false)
     private String password;
     @Column(name = "phone")
     private String phone;
     @Column(name = "address")
     private String address;
-    @Column(name = "type", insertable = false)
+    @Column(name = "type", nullable=false, insertable = true)
     private String type;
     
     public Employee(){
@@ -129,5 +129,10 @@ public class Employee implements Serializable {
     public void setType(String type) {
         this.type = type;
     }
-    
+
+	@Override
+	public String toString() {
+		return "Employee [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", userName=" + userName
+				+ ", password=" + password + ", phone=" + phone + ", address=" + address + ", type=" + type + "]";
+	}
 }

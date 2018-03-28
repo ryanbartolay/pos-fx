@@ -48,6 +48,8 @@ public class EmployeeDaoImpl implements EmployeeDao {
         Employee employee = (Employee) query.uniqueResult();
         session.getTransaction().commit();
        
+        
+        	System.out.println(employee);
         return employee.getType();
     }
 

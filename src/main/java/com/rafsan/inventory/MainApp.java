@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
+import com.rafsan.inventory.development.DevBootstrap;
+
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -42,6 +44,7 @@ public class MainApp extends Application {
 	public static void main(String[] args) {
 		try {
 			HibernateUtil.setSessionFactory();
+			new DevBootstrap();
 			launch(args);
 			HibernateUtil.getSessionFactory().close();
 		} catch(Exception e) {

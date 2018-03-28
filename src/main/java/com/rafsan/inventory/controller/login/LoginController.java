@@ -21,6 +21,7 @@ import javafx.stage.Stage;
 import org.apache.commons.codec.digest.DigestUtils;
 
 import com.rafsan.inventory.dao.impl.EmployeeDaoImpl;
+import com.rafsan.inventory.utils.StringUtils;
 
 public class LoginController implements Initializable {
 
@@ -69,26 +70,28 @@ public class LoginController implements Initializable {
         if (validateInput()) {
 
             String username = usernameField.getText().trim();
-            String password = DigestUtils.sha1Hex((passwordField.getText().trim()));
+            String password = StringUtils.cryptWithMD5(passwordField.getText().trim());
 
             System.out.println("username " + username);
             System.out.println("password " + passwordField.getText());
             System.out.println("passwordSha1 " + password);
             
             if (model.checkUser(username)) {
-
+            		System.out.println("1");
                 if (model.checkPassword(username, password)) {
-
+                	System.out.println("2");
                     ((Node) (event.getSource())).getScene().getWindow().hide();
 
                     String type = model.getEmployeeType(username);
-
+                    System.out.println("type " + type);
                     switch (type) {
                         case "admin":
+                        	System.out.println("2.1");
                             windows("/fxml/Admin.fxml", "Admin Panel");
                             break;
 
                         case "employee":
+                        	System.out.println("2.2");
                             windows("/fxml/Pos.fxml", "Point of Sales");
                             break;
                     }
