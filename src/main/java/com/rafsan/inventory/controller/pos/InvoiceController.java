@@ -1,14 +1,15 @@
 package com.rafsan.inventory.controller.pos;
 
+import com.rafsan.inventory.dao.impl.EmployeeDaoImpl;
+import com.rafsan.inventory.dao.impl.InvoiceDaoImpl;
+import com.rafsan.inventory.dao.impl.ProductDaoImpl;
+import com.rafsan.inventory.dao.impl.SalesDaoImpl;
 import com.rafsan.inventory.entity.Invoice;
 import com.rafsan.inventory.entity.Item;
 import com.rafsan.inventory.entity.Payment;
 import com.rafsan.inventory.entity.Product;
 import com.rafsan.inventory.entity.Sale;
-import com.rafsan.inventory.model.EmployeeModel;
-import com.rafsan.inventory.model.InvoiceModel;
-import com.rafsan.inventory.model.ProductModel;
-import com.rafsan.inventory.model.SalesModel;
+
 import java.net.URL;
 import java.sql.Timestamp;
 import java.util.ResourceBundle;
@@ -33,10 +34,10 @@ public class InvoiceController implements Initializable {
     private TextField totalAmountField, paidAmountField;
     private double netPrice;
     private ObservableList<Item> items;
-    private EmployeeModel employeeModel;
-    private ProductModel productModel;
-    private SalesModel salesModel;
-    private InvoiceModel invoiceModel;
+    private EmployeeDaoImpl employeeModel;
+    private ProductDaoImpl productModel;
+    private SalesDaoImpl salesModel;
+    private InvoiceDaoImpl invoiceModel;
     private Payment payment;
 
     private double xOffset = 0;
@@ -44,10 +45,10 @@ public class InvoiceController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        productModel = new ProductModel();
-        employeeModel = new EmployeeModel();
-        salesModel = new SalesModel();
-        invoiceModel = new InvoiceModel();
+        productModel = new ProductDaoImpl();
+        employeeModel = new EmployeeDaoImpl();
+        salesModel = new SalesDaoImpl();
+        invoiceModel = new InvoiceDaoImpl();
         totalAmountField.setText(String.valueOf(netPrice));
     }
 

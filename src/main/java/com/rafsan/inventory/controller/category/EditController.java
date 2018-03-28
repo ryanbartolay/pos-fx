@@ -1,8 +1,9 @@
 package com.rafsan.inventory.controller.category;
 
+import com.rafsan.inventory.dao.impl.CategoryDaoImpl;
 import com.rafsan.inventory.entity.Category;
 import com.rafsan.inventory.interfaces.CategoryInterface;
-import com.rafsan.inventory.model.CategoryModel;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -24,13 +25,13 @@ public class EditController implements Initializable, CategoryInterface {
     private long selectedCategoryId;
     @FXML
     private Button saveButton;
-    private CategoryModel categoryModel;
+    private CategoryDaoImpl categoryModel;
     private Category category;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        categoryModel = new CategoryModel();
+        categoryModel = new CategoryDaoImpl();
         resetValues();
     }
 

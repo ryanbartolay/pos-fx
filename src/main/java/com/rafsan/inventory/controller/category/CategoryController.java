@@ -1,8 +1,9 @@
 package com.rafsan.inventory.controller.category;
 
 import com.rafsan.inventory.interfaces.CategoryInterface;
+import com.rafsan.inventory.dao.impl.CategoryDaoImpl;
 import com.rafsan.inventory.entity.Category;
-import com.rafsan.inventory.model.CategoryModel;
+
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -44,7 +45,7 @@ public class CategoryController implements Initializable, CategoryInterface {
     private TextField searchField;
     @FXML
     private Button editButton, deleteButton;
-    private CategoryModel model;
+    private CategoryDaoImpl model;
 
     private double xOffset = 0;
     private double yOffset = 0;
@@ -56,7 +57,7 @@ public class CategoryController implements Initializable, CategoryInterface {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        model = new CategoryModel();
+        model = new CategoryDaoImpl();
 
         drawerAction();
         loadData();

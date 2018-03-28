@@ -1,8 +1,9 @@
 package com.rafsan.inventory.controller.sales;
 
+import com.rafsan.inventory.dao.impl.SalesDaoImpl;
 import com.rafsan.inventory.entity.Sale;
 import com.rafsan.inventory.interfaces.SaleInterface;
-import com.rafsan.inventory.model.SalesModel;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.animation.TranslateTransition;
@@ -43,7 +44,7 @@ public class SalesController implements Initializable, SaleInterface {
     private TextField searchField;
     @FXML
     private Button deleteButton;
-    private SalesModel model;
+    private SalesDaoImpl model;
 
     private double xOffset = 0;
     private double yOffset = 0;
@@ -55,7 +56,7 @@ public class SalesController implements Initializable, SaleInterface {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        model = new SalesModel();
+        model = new SalesDaoImpl();
         
         drawerAction();
         loadData();

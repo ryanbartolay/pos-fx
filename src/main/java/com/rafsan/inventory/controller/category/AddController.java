@@ -1,9 +1,10 @@
 package com.rafsan.inventory.controller.category;
 
+import com.rafsan.inventory.dao.impl.CategoryDaoImpl;
 import com.rafsan.inventory.entity.Category;
 import com.rafsan.inventory.interfaces.CategoryInterface;
 import static com.rafsan.inventory.interfaces.CategoryInterface.CATEGORYLIST;
-import com.rafsan.inventory.model.CategoryModel;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -24,11 +25,11 @@ public class AddController implements Initializable, CategoryInterface {
     private TextArea descriptionArea;
     @FXML
     private Button saveButton;
-    private CategoryModel categoryModel;
+    private CategoryDaoImpl categoryModel;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        categoryModel = new CategoryModel();
+        categoryModel = new CategoryDaoImpl();
     }
     
     @FXML

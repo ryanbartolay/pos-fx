@@ -1,8 +1,9 @@
 package com.rafsan.inventory.controller.purchase;
 
 import com.rafsan.inventory.interfaces.PurchaseInterface;
+import com.rafsan.inventory.dao.impl.PurchaseDaoImpl;
 import com.rafsan.inventory.entity.Purchase;
-import com.rafsan.inventory.model.PurchaseModel;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.animation.TranslateTransition;
@@ -46,13 +47,13 @@ public class PurchaseController implements Initializable, PurchaseInterface {
     private Button menu;
     @FXML
     private VBox drawer;
-    private PurchaseModel model;
+    private PurchaseDaoImpl model;
     private double xOffset = 0;
     private double yOffset = 0;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        model = new PurchaseModel();
+        model = new PurchaseDaoImpl();
         
         drawerAction();
         loadData();

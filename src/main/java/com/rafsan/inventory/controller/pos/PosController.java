@@ -1,9 +1,10 @@
 package com.rafsan.inventory.controller.pos;
 
+import com.rafsan.inventory.dao.impl.ProductDaoImpl;
 import com.rafsan.inventory.entity.Item;
 import com.rafsan.inventory.entity.Payment;
 import com.rafsan.inventory.entity.Product;
-import com.rafsan.inventory.model.ProductModel;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.beans.binding.Bindings;
@@ -58,7 +59,7 @@ public class PosController implements Initializable, ProductInterface {
     private Label quantityLabel;
     @FXML
     private ObservableList<Item> ITEMLIST;
-    private ProductModel productModel;
+    private ProductDaoImpl productModel;
 
     private double xOffset = 0;
     private double yOffset = 0;
@@ -66,7 +67,7 @@ public class PosController implements Initializable, ProductInterface {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         ITEMLIST = FXCollections.observableArrayList();
-        productModel = new ProductModel();
+        productModel = new ProductDaoImpl();
 
         loadData();
 

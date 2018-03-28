@@ -1,8 +1,9 @@
 package com.rafsan.inventory.controller.supplier;
 
+import com.rafsan.inventory.dao.impl.SupplierDaoImpl;
 import com.rafsan.inventory.entity.Supplier;
 import com.rafsan.inventory.interfaces.SupplierInterface;
-import com.rafsan.inventory.model.SupplierModel;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -24,12 +25,12 @@ public class EditController implements Initializable, SupplierInterface {
     @FXML
     private Button saveButton;
     private long selectedSupplierId;
-    private SupplierModel supplierModel;
+    private SupplierDaoImpl supplierModel;
     private Supplier supplier;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        supplierModel = new SupplierModel();
+        supplierModel = new SupplierDaoImpl();
         resetValues();
     }
 

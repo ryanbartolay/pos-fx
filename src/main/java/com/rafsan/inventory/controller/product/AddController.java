@@ -1,12 +1,13 @@
 package com.rafsan.inventory.controller.product;
 
 import com.rafsan.inventory.interfaces.ProductInterface;
+import com.rafsan.inventory.dao.impl.CategoryDaoImpl;
+import com.rafsan.inventory.dao.impl.ProductDaoImpl;
+import com.rafsan.inventory.dao.impl.SupplierDaoImpl;
 import com.rafsan.inventory.entity.Category;
 import com.rafsan.inventory.entity.Product;
 import com.rafsan.inventory.entity.Supplier;
-import com.rafsan.inventory.model.CategoryModel;
-import com.rafsan.inventory.model.ProductModel;
-import com.rafsan.inventory.model.SupplierModel;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -32,15 +33,15 @@ public class AddController implements Initializable, ProductInterface {
     private ComboBox categoryBox, supplierBox;
     @FXML
     private Button saveButton;
-    private ProductModel productModel;
-    private CategoryModel categoryModel;
-    private SupplierModel supplierModel;
+    private ProductDaoImpl productModel;
+    private CategoryDaoImpl categoryModel;
+    private SupplierDaoImpl supplierModel;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        productModel = new ProductModel();
-        categoryModel = new CategoryModel();
-        supplierModel = new SupplierModel();
+        productModel = new ProductDaoImpl();
+        categoryModel = new CategoryDaoImpl();
+        supplierModel = new SupplierDaoImpl();
         ObservableList<String> categoryList = FXCollections.observableArrayList(categoryModel.getTypes());
         ObservableList<String> supplierList = FXCollections.observableArrayList(supplierModel.getNames());
         categoryBox.setItems(categoryList);

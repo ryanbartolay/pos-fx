@@ -1,9 +1,10 @@
 package com.rafsan.inventory.controller.admin;
 
+import com.rafsan.inventory.dao.impl.InvoiceDaoImpl;
+import com.rafsan.inventory.dao.impl.ProductDaoImpl;
 import com.rafsan.inventory.entity.Invoice;
 import com.rafsan.inventory.entity.Product;
-import com.rafsan.inventory.model.InvoiceModel;
-import com.rafsan.inventory.model.ProductModel;
+
 import java.net.URL;
 import java.text.DateFormatSymbols;
 import java.util.Locale;
@@ -53,14 +54,14 @@ public class AdminController implements Initializable {
     @FXML
     private PieChart stockChart;
 
-    private ProductModel productModel;
-    private InvoiceModel invoiceModel;
+    private ProductDaoImpl productModel;
+    private InvoiceDaoImpl invoiceModel;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        productModel = new ProductModel();
-        invoiceModel = new InvoiceModel();
+        productModel = new ProductDaoImpl();
+        invoiceModel = new InvoiceDaoImpl();
 
         drawerAction();
         loadInvoiceChart();

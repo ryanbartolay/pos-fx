@@ -1,6 +1,5 @@
 package com.rafsan.inventory.controller.login;
 
-import com.rafsan.inventory.model.EmployeeModel;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
@@ -21,17 +20,19 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import org.apache.commons.codec.digest.DigestUtils;
 
+import com.rafsan.inventory.dao.impl.EmployeeDaoImpl;
+
 public class LoginController implements Initializable {
 
     @FXML
     private TextField usernameField, passwordField;
     @FXML
     private Label errorLabel;
-    private EmployeeModel model;
+    private EmployeeDaoImpl model;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        model = new EmployeeModel();
+        model = new EmployeeDaoImpl();
         enterPressed();
     }
 
@@ -70,6 +71,10 @@ public class LoginController implements Initializable {
             String username = usernameField.getText().trim();
             String password = DigestUtils.sha1Hex((passwordField.getText().trim()));
 
+            System.out.println("username " + username);
+            System.out.println("password " + passwordField.getText());
+            System.out.println("passwordSha1 " + password);
+            
             if (model.checkUser(username)) {
 
                 if (model.checkPassword(username, password)) {

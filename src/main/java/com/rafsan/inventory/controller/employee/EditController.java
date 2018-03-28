@@ -1,8 +1,9 @@
 package com.rafsan.inventory.controller.employee;
 
+import com.rafsan.inventory.dao.impl.EmployeeDaoImpl;
 import com.rafsan.inventory.entity.Employee;
 import com.rafsan.inventory.interfaces.EmployeeInterface;
-import com.rafsan.inventory.model.EmployeeModel;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -28,12 +29,12 @@ public class EditController implements Initializable, EmployeeInterface {
     @FXML
     private Button saveButton;
     private long selectedEmployeeId;
-    private EmployeeModel employeeModel;
+    private EmployeeDaoImpl employeeModel;
     private Employee employee;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        employeeModel = new EmployeeModel();
+        employeeModel = new EmployeeDaoImpl();
         resetValues();
     }
 

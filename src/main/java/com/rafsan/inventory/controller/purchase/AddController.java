@@ -1,12 +1,13 @@
 package com.rafsan.inventory.controller.purchase;
 
+import com.rafsan.inventory.dao.impl.ProductDaoImpl;
+import com.rafsan.inventory.dao.impl.PurchaseDaoImpl;
+import com.rafsan.inventory.dao.impl.SupplierDaoImpl;
 import com.rafsan.inventory.entity.Product;
 import com.rafsan.inventory.entity.Purchase;
 import com.rafsan.inventory.entity.Supplier;
 import com.rafsan.inventory.interfaces.PurchaseInterface;
-import com.rafsan.inventory.model.ProductModel;
-import com.rafsan.inventory.model.PurchaseModel;
-import com.rafsan.inventory.model.SupplierModel;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -29,15 +30,15 @@ public class AddController implements Initializable, PurchaseInterface {
     private TextField quantityField, priceField;
     @FXML
     private Button saveButton;
-    private ProductModel productModel;
-    private SupplierModel supplierModel;
-    private PurchaseModel purchaseModel;
+    private ProductDaoImpl productModel;
+    private SupplierDaoImpl supplierModel;
+    private PurchaseDaoImpl purchaseModel;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        productModel = new ProductModel();
-        supplierModel = new SupplierModel();
-        purchaseModel = new PurchaseModel();
+        productModel = new ProductDaoImpl();
+        supplierModel = new SupplierDaoImpl();
+        purchaseModel = new PurchaseDaoImpl();
         ObservableList<String> productList = FXCollections.observableArrayList(productModel.getProductNames());
         ObservableList<String> supplierList = FXCollections.observableArrayList(supplierModel.getNames());
         productBox.setItems(productList);

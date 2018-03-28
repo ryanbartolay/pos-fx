@@ -1,8 +1,9 @@
 package com.rafsan.inventory.controller.supplier;
 
 import com.rafsan.inventory.interfaces.SupplierInterface;
+import com.rafsan.inventory.dao.impl.SupplierDaoImpl;
 import com.rafsan.inventory.entity.Supplier;
-import com.rafsan.inventory.model.SupplierModel;
+
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -44,7 +45,7 @@ public class SupplierController implements Initializable, SupplierInterface {
     private TextField searchField;
     @FXML
     private Button editButton, deleteButton;
-    private SupplierModel model;
+    private SupplierDaoImpl model;
     
     private double xOffset = 0;
     private double yOffset = 0;
@@ -56,7 +57,7 @@ public class SupplierController implements Initializable, SupplierInterface {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        model = new SupplierModel();
+        model = new SupplierDaoImpl();
         
         drawerAction();
         loadData();

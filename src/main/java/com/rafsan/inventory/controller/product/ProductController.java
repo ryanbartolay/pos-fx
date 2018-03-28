@@ -1,8 +1,10 @@
 package com.rafsan.inventory.controller.product;
 
+import com.rafsan.inventory.dao.impl.ProductDaoImpl;
+import com.rafsan.inventory.dao.impl.SalesDaoImpl;
 import com.rafsan.inventory.entity.Product;
 import com.rafsan.inventory.entity.Sale;
-import com.rafsan.inventory.model.ProductModel;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.beans.property.SimpleStringProperty;
@@ -24,7 +26,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import com.rafsan.inventory.interfaces.ProductInterface;
 import static com.rafsan.inventory.interfaces.ProductInterface.PRODUCTLIST;
-import com.rafsan.inventory.model.SalesModel;
+
 import java.text.DateFormatSymbols;
 import java.util.List;
 import java.util.Locale;
@@ -56,7 +58,7 @@ public class ProductController implements Initializable, ProductInterface {
     private TableColumn<Product, Double> priceColumn, quantityColumn;
     @FXML
     private TextField searchField;
-    private ProductModel model;
+    private ProductDaoImpl model;
     @FXML
     private Button editButton, deleteButton;
 
@@ -73,12 +75,12 @@ public class ProductController implements Initializable, ProductInterface {
     @FXML
     private VBox drawer;
 
-    private SalesModel salesModel;
+    private SalesDaoImpl salesModel;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        model = new ProductModel();
-        salesModel = new SalesModel();
+        model = new ProductDaoImpl();
+        salesModel = new SalesDaoImpl();
         drawerAction();
         loadData();
 

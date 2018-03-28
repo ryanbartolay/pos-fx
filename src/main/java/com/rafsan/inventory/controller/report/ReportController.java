@@ -1,8 +1,9 @@
 package com.rafsan.inventory.controller.report;
 
+import com.rafsan.inventory.dao.impl.InvoiceDaoImpl;
 import com.rafsan.inventory.entity.Invoice;
 import com.rafsan.inventory.interfaces.ReportInterface;
-import com.rafsan.inventory.model.InvoiceModel;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -46,7 +47,7 @@ public class ReportController implements Initializable, ReportInterface {
     private TextField searchField;
     @FXML
     private Button viewButton;
-    private InvoiceModel model;
+    private InvoiceDaoImpl model;
 
     private double xOffset = 0;
     private double yOffset = 0;
@@ -58,7 +59,7 @@ public class ReportController implements Initializable, ReportInterface {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        model = new InvoiceModel();
+        model = new InvoiceDaoImpl();
         
         drawerAction();
         loadData();
