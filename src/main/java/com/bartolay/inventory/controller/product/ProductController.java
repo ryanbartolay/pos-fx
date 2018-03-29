@@ -266,6 +266,27 @@ public class ProductController implements Initializable, ProductInterface {
     }
 
     @FXML
+    public void scanBarcodeAction(ActionEvent event) throws Exception {
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/product/ScanBarcode.fxml"));
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        root.setOnMousePressed((MouseEvent e) -> {
+            xOffset = e.getSceneX();
+            yOffset = e.getSceneY();
+        });
+        root.setOnMouseDragged((MouseEvent e) -> {
+            stage.setX(e.getScreenX() - xOffset);
+            stage.setY(e.getScreenY() - yOffset);
+        });
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setTitle("Scan Barcode");
+        stage.getIcons().add(new Image("/images/logo.png"));
+        stage.initStyle(StageStyle.UNDECORATED);
+        stage.setScene(scene);
+        stage.show();
+    }
+    
+    @FXML
     public void addAction(ActionEvent event) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/product/Add.fxml"));
         Scene scene = new Scene(root);

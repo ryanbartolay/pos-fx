@@ -81,7 +81,7 @@
                         </TableView>
                         <HBox alignment="CENTER_RIGHT" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="760.0" spacing="10.0">
                            <children>
-                           	<Button mnemonicParsing="false" onAction="#addAction" prefHeight="25.0" prefWidth="150.0" text="Scan Barcode" />
+                           	<Button mnemonicParsing="false" onAction="#scanBarcodeAction" prefHeight="25.0" prefWidth="150.0" text="Scan Barcode" />
                               <Button mnemonicParsing="false" onAction="#addAction" prefHeight="25.0" prefWidth="70.0" text="Add" />
                               <Button fx:id="editButton" mnemonicParsing="false" onAction="#editAction" prefHeight="25.0" prefWidth="70.0" text="Edit" />
                               <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#deleteAction" prefHeight="25.0" prefWidth="70.0" text="Delete">
