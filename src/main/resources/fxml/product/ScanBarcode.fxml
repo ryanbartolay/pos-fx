@@ -18,11 +18,13 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?scenebuilder-stylesheet ../../styles/form.css?>
 
-<VBox onKeyPressed="#scanBarcodeAction" prefHeight="680.0" prefWidth="640.0" stylesheets="@../../styles/form.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bartolay.inventory.controller.product.AddController">
+<VBox onKeyPressed="#scanBarcodeAction" prefHeight="680.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bartolay.inventory.controller.product.ScanBarcodeController">
   <children>
       <HBox alignment="CENTER_RIGHT" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="640.0" styleClass="top-bar" VBox.vgrow="NEVER">
          <children>
+         <Label text="Scan Barcode" />
             <Button mnemonicParsing="false" onAction="#closeAction" prefHeight="25.0" prefWidth="25.0" styleClass="close-button" />
          </children>
          <padding>
@@ -40,7 +42,7 @@
             <Label styleClass="header-label" text="Scan Barcode" />
          </children>
       </HBox>
-      <VBox alignment="TOP_CENTER" minWidth="-Infinity" prefWidth="640.0" styleClass="vbox-body" VBox.vgrow="ALWAYS">
+      <!-- <VBox alignment="TOP_CENTER" minWidth="-Infinity" prefWidth="640.0" styleClass="vbox-body" VBox.vgrow="ALWAYS">
          <children>
             <GridPane alignment="CENTER" hgap="10.0" vgap="10.0">
               <columnConstraints>
@@ -106,6 +108,6 @@
          <VBox.margin>
             <Insets />
          </VBox.margin>
-      </HBox>
+      </HBox> -->
   </children>
 </VBox>
