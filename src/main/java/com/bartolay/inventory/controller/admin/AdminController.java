@@ -1,4 +1,4 @@
-package com.rafsan.inventory.controller.admin;
+package com.bartolay.inventory.controller.admin;
 
 import com.rafsan.inventory.dao.impl.InvoiceDaoImpl;
 import com.rafsan.inventory.dao.impl.ProductDaoImpl;

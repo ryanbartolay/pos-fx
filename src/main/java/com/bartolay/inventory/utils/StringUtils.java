@@ -1,4 +1,4 @@
-package com.rafsan.inventory.utils;
+package com.bartolay.inventory.utils;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;

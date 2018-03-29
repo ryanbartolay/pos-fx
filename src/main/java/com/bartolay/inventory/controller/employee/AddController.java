@@ -1,4 +1,4 @@
-package com.rafsan.inventory.controller.employee;
+package com.bartolay.inventory.controller.employee;
 
 import com.rafsan.inventory.dao.impl.EmployeeDaoImpl;
 import com.rafsan.inventory.entity.Employee;

@@ -1,4 +1,4 @@
-package com.rafsan.inventory.controller.login;
+package com.bartolay.inventory.controller.login;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -20,8 +20,8 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import org.apache.commons.codec.digest.DigestUtils;
 
+import com.bartolay.inventory.utils.StringUtils;
 import com.rafsan.inventory.dao.impl.EmployeeDaoImpl;
-import com.rafsan.inventory.utils.StringUtils;
 
 public class LoginController implements Initializable {
 

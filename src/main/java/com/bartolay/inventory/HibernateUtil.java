@@ -1,4 +1,4 @@
-package com.rafsan.inventory;
+package com.bartolay.inventory;
 
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;

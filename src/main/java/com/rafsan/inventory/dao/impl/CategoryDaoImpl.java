@@ -1,8 +1,9 @@
 package com.rafsan.inventory.dao.impl;
 
-import com.rafsan.inventory.HibernateUtil;
+import com.bartolay.inventory.HibernateUtil;
 import com.rafsan.inventory.dao.CategoryDao;
 import com.rafsan.inventory.entity.Category;
+
 import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

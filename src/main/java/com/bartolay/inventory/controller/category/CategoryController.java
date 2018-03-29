@@ -1,4 +1,4 @@
-package com.rafsan.inventory.controller.category;
+package com.bartolay.inventory.controller.category;
 
 import com.rafsan.inventory.interfaces.CategoryInterface;
 import com.rafsan.inventory.dao.impl.CategoryDaoImpl;

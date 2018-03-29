@@ -1,9 +1,8 @@
-package com.rafsan.inventory.controller.category;
+package com.bartolay.inventory.controller.category;
 
 import com.rafsan.inventory.dao.impl.CategoryDaoImpl;
 import com.rafsan.inventory.entity.Category;
 import com.rafsan.inventory.interfaces.CategoryInterface;
-import static com.rafsan.inventory.interfaces.CategoryInterface.CATEGORYLIST;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -17,51 +16,70 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class AddController implements Initializable, CategoryInterface {
-    
+public class EditController implements Initializable, CategoryInterface {
+
     @FXML
     private TextField typeField;
     @FXML
     private TextArea descriptionArea;
+    private long selectedCategoryId;
     @FXML
     private Button saveButton;
     private CategoryDaoImpl categoryModel;
+    private Category category;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
         categoryModel = new CategoryDaoImpl();
+        resetValues();
     }
-    
-    @FXML
-    public void handleCancel(ActionEvent event) {
-        typeField.setText("");
-        descriptionArea.setText("");
+
+    public void setCategory(Category category, long selectedCategoryId) {
+        this.category = category;
+        this.selectedCategoryId = selectedCategoryId;
+        setData();
     }
-    
+
     @FXML
     public void handleSave(ActionEvent event) {
 
         if (validateInput()) {
 
-            Category category = new Category(
+            Category editedCategory = new Category(
+                    category.getId(),
                     typeField.getText(),
                     descriptionArea.getText()
             );
 
-            categoryModel.saveCategory(category);
-            CATEGORYLIST.clear();
-            CATEGORYLIST.addAll(categoryModel.getCategories());
+            categoryModel.updateCategory(editedCategory);
+            CATEGORYLIST.set((int) selectedCategoryId, editedCategory);
 
             ((Stage) saveButton.getScene().getWindow()).close();
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Successful");
-            alert.setHeaderText("Category Created!");
-            alert.setContentText("Category is created successfully");
+            alert.setHeaderText("Category Updated!");
+            alert.setContentText("Category is updated successfully");
             alert.showAndWait();
         }
     }
-    
+
+    private void setData() {
+        typeField.setText(category.getType());
+        descriptionArea.setText(category.getDescription());
+    }
+
+    private void resetValues() {
+        typeField.setText("");
+        descriptionArea.setText("");
+    }
+
+    @FXML
+    public void handleCancel(ActionEvent event) {
+        resetValues();
+    }
+
     private boolean validateInput() {
 
         String errorMessage = "";

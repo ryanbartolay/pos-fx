@@ -1,10 +1,10 @@
-package com.rafsan.inventory;
+package com.bartolay.inventory;
 
 import java.util.List;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
-import com.rafsan.inventory.development.DevBootstrap;
+import com.bartolay.inventory.development.DevBootstrap;
 
 import javafx.application.Application;
 import javafx.application.Platform;

@@ -1,4 +1,4 @@
-package com.rafsan.inventory.controller.pos;
+package com.bartolay.inventory.controller.pos;
 
 import com.rafsan.inventory.dao.impl.EmployeeDaoImpl;
 import com.rafsan.inventory.dao.impl.InvoiceDaoImpl;
