@@ -1,5 +1,8 @@
 package com.bartolay.inventory.controller.product;
 
+import java.net.URL;
+import java.util.ResourceBundle;
+
 import com.bartolay.inventory.dao.impl.CategoryDaoImpl;
 import com.bartolay.inventory.dao.impl.ProductDaoImpl;
 import com.bartolay.inventory.dao.impl.SupplierDaoImpl;
@@ -8,8 +11,6 @@ import com.bartolay.inventory.entity.Product;
 import com.bartolay.inventory.entity.Supplier;
 import com.bartolay.inventory.interfaces.ProductInterface;
 
-import java.net.URL;
-import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -21,9 +22,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-public class AddController implements Initializable, ProductInterface {
+public class AddController extends Pane implements Initializable, ProductInterface {
 
     @FXML
     private TextField nameField, priceField, quantityField;
@@ -127,5 +131,71 @@ public class AddController implements Initializable, ProductInterface {
     @FXML
     public void closeAction(ActionEvent event) {
         ((Node) (event.getSource())).getScene().getWindow().hide();
+    }
+
+    private boolean up = false;
+    private boolean down = false;
+    private boolean left = false;
+    private boolean right = false;
+    private boolean spacebar = false;
+    private boolean shift = false;
+    private boolean ctrl = false;
+
+    private double mouseX;
+    private double mouseY;
+	
+    
+	@FXML public void scanBarcodeAction(KeyEvent event) {
+		System.out.println(event.getEventType().toString());
+
+        if(event instanceof KeyEvent) {
+            if(event.getSource() == getOnKeyPressed()) {
+                keyPressed((KeyEvent) event);
+            }
+            if(event.getSource() == getOnKeyReleased()) {
+                keyReleased((KeyEvent) event);
+            }
+
+            System.out.println(((KeyEvent) event).getCode());
+        }
+	}
+	
+
+	public void keyPressed(KeyEvent e) {
+        KeyCode code = e.getCode();
+
+        if (code == KeyCode.UP)
+            up = true;
+        if (code == KeyCode.DOWN)
+            down = true;
+        if (code == KeyCode.LEFT)
+            left = true;
+        if (code == KeyCode.RIGHT)
+            right = true;
+        if (code == KeyCode.SPACE)
+            spacebar = true;
+        if (code == KeyCode.SHIFT)
+            shift = true;
+        if (code == KeyCode.CONTROL)
+            ctrl = true;
+    }
+
+    public void keyReleased(KeyEvent e) {
+        KeyCode code = e.getCode();
+
+        if (code == KeyCode.UP)
+            up = false;
+        if (code == KeyCode.DOWN)
+            down = false;
+        if (code == KeyCode.LEFT)
+            left = false;
+        if (code == KeyCode.RIGHT)
+            right = false;
+        if (code == KeyCode.SPACE)
+            spacebar = false;
+        if (code == KeyCode.SHIFT)
+            shift = false;
+        if (code == KeyCode.CONTROL)
+            ctrl = false;
     }
 }
