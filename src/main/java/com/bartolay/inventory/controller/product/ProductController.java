@@ -1,16 +1,23 @@
 package com.bartolay.inventory.controller.product;
 
+import java.net.URL;
+import java.text.DateFormatSymbols;
+import java.util.List;
+import java.util.Locale;
+import java.util.Optional;
+import java.util.ResourceBundle;
+
 import com.bartolay.inventory.dao.impl.ProductDaoImpl;
 import com.bartolay.inventory.dao.impl.SalesDaoImpl;
 import com.bartolay.inventory.entity.Product;
 import com.bartolay.inventory.entity.Sale;
 import com.bartolay.inventory.interfaces.ProductInterface;
 
-import static com.bartolay.inventory.interfaces.ProductInterface.PRODUCTLIST;
-
-import java.net.URL;
-import java.util.ResourceBundle;
+import javafx.animation.TranslateTransition;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
@@ -20,30 +27,21 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-
-import java.text.DateFormatSymbols;
-import java.util.List;
-import java.util.Locale;
-import java.util.Optional;
-import javafx.animation.TranslateTransition;
-import javafx.beans.binding.Bindings;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 

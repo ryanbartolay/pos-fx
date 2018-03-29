@@ -13,12 +13,12 @@
 		<property name="hibernate.format_sql">false</property>
 		<property name="hbm2ddl.auto">create-drop</property>
 
-		<mapping class="com.rafsan.inventory.entity.Category" />
-		<mapping class="com.rafsan.inventory.entity.Employee" />
-		<mapping class="com.rafsan.inventory.entity.Invoice" />
-		<mapping class="com.rafsan.inventory.entity.Product" />
-		<mapping class="com.rafsan.inventory.entity.Purchase" />
-		<mapping class="com.rafsan.inventory.entity.Sale" />
-		<mapping class="com.rafsan.inventory.entity.Supplier" />
+		<mapping class="com.bartolay.inventory.entity.Category" />
+		<mapping class="com.bartolay.inventory.entity.Employee" />
+		<mapping class="com.bartolay.inventory.entity.Invoice" />
+		<mapping class="com.bartolay.inventory.entity.Product" />
+		<mapping class="com.bartolay.inventory.entity.Purchase" />
+		<mapping class="com.bartolay.inventory.entity.Sale" />
+		<mapping class="com.bartolay.inventory.entity.Supplier" />
 	</session-factory>
 </hibernate-configuration>
