@@ -1,14 +1,14 @@
-package com.bartolay.inventory.controller.category;
+package com.bartolay.inventory.controller.purchase;
 
-import com.bartolay.inventory.dao.impl.CategoryDaoImpl;
-import com.bartolay.inventory.entity.Category;
-import com.bartolay.inventory.interfaces.CategoryInterface;
+import com.bartolay.inventory.dao.impl.PurchaseDaoImpl;
+import com.bartolay.inventory.entity.Purchase;
+import com.bartolay.inventory.interfaces.PurchaseInterface;
 
 import java.net.URL;
-import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.animation.TranslateTransition;
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
@@ -18,9 +18,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -33,83 +31,82 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
-public class CategoryController implements Initializable, CategoryInterface {
-
+public class PurchaseController implements Initializable, PurchaseInterface {
+    
     @FXML
-    private TableView<Category> categoryTable;
+    private TableView<Purchase> purchaseTable;
     @FXML
-    private TableColumn<Category, Long> idColumn;
+    private TableColumn<Purchase, Long> idColumn;
     @FXML
-    private TableColumn<Category, String> typeColumn, descriptionColumn;
+    private TableColumn<Purchase, String> productColumn, supplierColumn, dateColumn;
+    @FXML
+    private TableColumn<Purchase, Double> quantityColumn, priceColumn, totalColumn;
     @FXML
     private TextField searchField;
-    @FXML
-    private Button editButton, deleteButton;
-    private CategoryDaoImpl model;
-
-    private double xOffset = 0;
-    private double yOffset = 0;
-
     @FXML
     private Button menu;
     @FXML
     private VBox drawer;
+    private PurchaseDaoImpl model;
+    private double xOffset = 0;
+    private double yOffset = 0;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        model = new CategoryDaoImpl();
-
+        model = new PurchaseDaoImpl();
+        
         drawerAction();
         loadData();
-
+        
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
-        typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
-        descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
-
-        categoryTable.setItems(CATEGORYLIST);
-
+        productColumn.setCellValueFactory((TableColumn.CellDataFeatures<Purchase, String> p) -> 
+                new SimpleStringProperty(p.getValue().getProduct().getProductName()));
+        supplierColumn.setCellValueFactory((TableColumn.CellDataFeatures<Purchase, String> p)
+                -> new SimpleStringProperty(p.getValue().getSupplier().getName()));
+        quantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+        priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
+        totalColumn.setCellValueFactory(new PropertyValueFactory<>("total"));
+        dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
+        purchaseTable.setItems(PURCHASELIST);
+        
         filterData();
-
-        editButton
-                .disableProperty()
-                .bind(Bindings.isEmpty(categoryTable.getSelectionModel().getSelectedItems()));
-        deleteButton
-                .disableProperty()
-                .bind(Bindings.isEmpty(categoryTable.getSelectionModel().getSelectedItems()));
+        
     }
 
     private void filterData() {
-        FilteredList<Category> searchedData = new FilteredList<>(CATEGORYLIST, e -> true);
+        FilteredList<Purchase> searchedData = new FilteredList<>(PURCHASELIST, e -> true);
         searchField.setOnKeyReleased(e -> {
             searchField.textProperty().addListener((observable, oldValue, newValue) -> {
-                searchedData.setPredicate(category -> {
+                searchedData.setPredicate(purchase -> {
                     if (newValue == null || newValue.isEmpty()) {
                         return true;
                     }
                     String lowerCaseFilter = newValue.toLowerCase();
-                    if (category.getType().toLowerCase().contains(lowerCaseFilter)) {
+                    if (purchase.getProduct().getProductName().toLowerCase().contains(lowerCaseFilter)) {
                         return true;
-                    } else if (category.getDescription().toLowerCase().contains(lowerCaseFilter)) {
+                    } else if (purchase.getProduct().getCategory().getType().toLowerCase().contains(lowerCaseFilter)) {
                         return true;
                     }
+                    
                     return false;
                 });
             });
 
-            SortedList<Category> sortedData = new SortedList<>(searchedData);
-            sortedData.comparatorProperty().bind(categoryTable.comparatorProperty());
-            categoryTable.setItems(sortedData);
+            SortedList<Purchase> sortedData = new SortedList<>(searchedData);
+            sortedData.comparatorProperty().bind(purchaseTable.comparatorProperty());
+            purchaseTable.setItems(sortedData);
         });
     }
-
+    
     private void loadData() {
-
-        if (!CATEGORYLIST.isEmpty()) {
-            CATEGORYLIST.clear();
+    
+        if(!PURCHASELIST.isEmpty()){
+            PURCHASELIST.clear();
         }
-        CATEGORYLIST.addAll(model.getCategories());
+        
+        PURCHASELIST.addAll(model.getPurchases());
     }
-
+    
     private void drawerAction() {
 
         TranslateTransition openNav = new TranslateTransition(new Duration(350), drawer);
@@ -128,23 +125,23 @@ public class CategoryController implements Initializable, CategoryInterface {
             }
         });
     }
-
+    
     @FXML
     public void adminAction(ActionEvent event) throws Exception {
-
+        
         windows("/fxml/Admin.fxml", "Admin", event);
     }
-
+    
     @FXML
     public void productAction(ActionEvent event) throws Exception {
 
         windows("/fxml/Product.fxml", "Product", event);
     }
-
+    
     @FXML
-    public void purchaseAction(ActionEvent event) throws Exception {
+    public void categoryAction(ActionEvent event) throws Exception {
 
-        windows("/fxml/Purchase.fxml", "Purchase", event);
+        windows("/fxml/Category.fxml", "Category", event);
     }
 
     @FXML
@@ -152,19 +149,22 @@ public class CategoryController implements Initializable, CategoryInterface {
 
         windows("/fxml/Sales.fxml", "Sales", event);
     }
-
-    @FXML
-    public void supplierAction(ActionEvent event) throws Exception {
-        windows("/fxml/Supplier.fxml", "Supplier", event);
-    }
-
+    
     @FXML
     public void reportAction(ActionEvent event) throws Exception {
+        
         windows("/fxml/Report.fxml", "Report", event);
     }
 
     @FXML
+    public void supplierAction(ActionEvent event) throws Exception {
+        
+        windows("/fxml/Supplier.fxml", "Supplier", event);
+    }
+    
+    @FXML
     public void staffAction(ActionEvent event) throws Exception {
+        
         windows("/fxml/Employee.fxml", "Employee", event);
     }
 
@@ -187,6 +187,7 @@ public class CategoryController implements Initializable, CategoryInterface {
         stage.initStyle(StageStyle.UNDECORATED);
         stage.setScene(scene);
         stage.show();
+        
     }
 
     private void windows(String path, String title, ActionEvent event) throws Exception {
@@ -202,11 +203,11 @@ public class CategoryController implements Initializable, CategoryInterface {
         stage.setScene(scene);
         stage.show();
     }
-
+    
     @FXML
     public void addAction(ActionEvent event) throws Exception {
-
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/category/Add.fxml"));
+    
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/purchase/Add.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         root.setOnMousePressed((MouseEvent e) -> {
@@ -218,58 +219,10 @@ public class CategoryController implements Initializable, CategoryInterface {
             stage.setY(e.getScreenY() - yOffset);
         });
         stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setTitle("New Category");
+        stage.setTitle("New Purchase");
         stage.getIcons().add(new Image("/images/logo.png"));
         stage.initStyle(StageStyle.UNDECORATED);
         stage.setScene(scene);
         stage.show();
-    }
-
-    @FXML
-    public void editAction(ActionEvent event) throws Exception {
-
-        Category selectedCategory = categoryTable.getSelectionModel().getSelectedItem();
-        int selectedCategoryId = categoryTable.getSelectionModel().getSelectedIndex();
-        FXMLLoader loader = new FXMLLoader((getClass().getResource("/fxml/category/Edit.fxml")));
-        EditController controller = new EditController();
-        loader.setController(controller);
-        Parent root = loader.load();
-        Scene scene = new Scene(root);
-        Stage stage = new Stage();
-        root.setOnMousePressed((MouseEvent e) -> {
-            xOffset = e.getSceneX();
-            yOffset = e.getSceneY();
-        });
-        root.setOnMouseDragged((MouseEvent e) -> {
-            stage.setX(e.getScreenX() - xOffset);
-            stage.setY(e.getScreenY() - yOffset);
-        });
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setTitle("Edit Category");
-        stage.getIcons().add(new Image("/images/logo.png"));
-        stage.initStyle(StageStyle.UNDECORATED);
-        stage.setScene(scene);
-        stage.show();
-        controller.setCategory(selectedCategory, selectedCategoryId);
-        categoryTable.getSelectionModel().clearSelection();
-    }
-
-    @FXML
-    public void deleteAction(ActionEvent event) {
-
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Delete");
-        alert.setHeaderText("Delete Product");
-        alert.setContentText("Are you sure?");
-
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == ButtonType.OK) {
-            Category selectedCategory = categoryTable.getSelectionModel().getSelectedItem();
-
-            model.deleteCategory(selectedCategory);
-            CATEGORYLIST.remove(selectedCategory);
-        }
-
-        categoryTable.getSelectionModel().clearSelection();
     }
 }

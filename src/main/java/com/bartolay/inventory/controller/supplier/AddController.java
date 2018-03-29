@@ -1,8 +1,8 @@
-package com.bartolay.inventory.controller.employee;
+package com.bartolay.inventory.controller.supplier;
 
-import com.bartolay.inventory.dao.impl.EmployeeDaoImpl;
-import com.bartolay.inventory.entity.Employee;
-import com.bartolay.inventory.interfaces.EmployeeInterface;
+import com.bartolay.inventory.dao.impl.SupplierDaoImpl;
+import com.bartolay.inventory.entity.Supplier;
+import com.bartolay.inventory.interfaces.SupplierInterface;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -12,35 +12,28 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import org.apache.commons.codec.digest.DigestUtils;
 
-public class AddController implements Initializable, EmployeeInterface {
+public class AddController implements Initializable, SupplierInterface {
 
     @FXML
-    private TextField firstField, lastField, usernameField, phoneField;
-    @FXML
-    private PasswordField passwordField;
+    private TextField supplierField, phoneField;
     @FXML
     private TextArea addressArea;
     @FXML
     private Button saveButton;
-    private EmployeeDaoImpl employeeModel;
+    private SupplierDaoImpl supplierModel;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        employeeModel = new EmployeeDaoImpl();
+        supplierModel = new SupplierDaoImpl();
     }
 
     @FXML
     public void handleCancel(ActionEvent event) {
-        firstField.setText("");
-        lastField.setText("");
-        usernameField.setText("");
-        passwordField.setText("");
+        supplierField.setText("");
         phoneField.setText("");
         addressArea.setText("");
     }
@@ -50,24 +43,21 @@ public class AddController implements Initializable, EmployeeInterface {
 
         if (validateInput()) {
 
-            Employee employee = new Employee(
-                    firstField.getText(),
-                    lastField.getText(),
-                    usernameField.getText(),
-                    DigestUtils.sha1Hex(passwordField.getText()),
+            Supplier supplier = new Supplier(
+                    supplierField.getText(),
                     phoneField.getText(),
                     addressArea.getText()
             );
 
-            employeeModel.saveEmployee(employee);
-            EMPLOYEELIST.clear();
-            EMPLOYEELIST.addAll(employeeModel.getEmployees());
+            supplierModel.saveSuplier(supplier);
+            SUPPLIERLIST.clear();
+            SUPPLIERLIST.addAll(supplierModel.getSuppliers());
 
             ((Stage) saveButton.getScene().getWindow()).close();
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Successful");
-            alert.setHeaderText("Employe Created!");
+            alert.setHeaderText("Employee Created!");
             alert.setContentText("Employee is created successfully");
             alert.showAndWait();
         }
@@ -77,20 +67,8 @@ public class AddController implements Initializable, EmployeeInterface {
 
         String errorMessage = "";
 
-        if (firstField.getText() == null || firstField.getText().length() == 0) {
+        if (supplierField.getText() == null || supplierField.getText().length() == 0) {
             errorMessage += "No valid first name!\n";
-        }
-
-        if (lastField.getText() == null || lastField.getText().length() == 0) {
-            errorMessage += "No valid last name!\n";
-        }
-
-        if (usernameField.getText() == null || usernameField.getText().length() == 0) {
-            errorMessage += "No valid username!\n";
-        }
-
-        if (passwordField.getText() == null || passwordField.getText().length() == 0) {
-            errorMessage += "No valid password!\n";
         }
 
         if (phoneField.getText() == null || phoneField.getText().length() == 0) {
@@ -113,7 +91,7 @@ public class AddController implements Initializable, EmployeeInterface {
             return false;
         }
     }
-
+    
     @FXML
     public void closeAction(ActionEvent event) {
         ((Node) (event.getSource())).getScene().getWindow().hide();

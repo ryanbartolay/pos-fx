@@ -20,8 +20,8 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import org.apache.commons.codec.digest.DigestUtils;
 
+import com.bartolay.inventory.dao.impl.EmployeeDaoImpl;
 import com.bartolay.inventory.utils.StringUtils;
-import com.rafsan.inventory.dao.impl.EmployeeDaoImpl;
 
 public class LoginController implements Initializable {
 

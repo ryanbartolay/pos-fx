@@ -1,14 +1,15 @@
-package com.bartolay.inventory.controller.category;
+package com.bartolay.inventory.controller.report;
 
-import com.bartolay.inventory.dao.impl.CategoryDaoImpl;
-import com.bartolay.inventory.entity.Category;
-import com.bartolay.inventory.interfaces.CategoryInterface;
+import com.bartolay.inventory.dao.impl.InvoiceDaoImpl;
+import com.bartolay.inventory.entity.Invoice;
+import com.bartolay.inventory.interfaces.ReportInterface;
 
+import java.io.IOException;
 import java.net.URL;
-import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.animation.TranslateTransition;
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
@@ -18,9 +19,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -33,23 +32,26 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
-public class CategoryController implements Initializable, CategoryInterface {
+public class ReportController implements Initializable, ReportInterface {
 
     @FXML
-    private TableView<Category> categoryTable;
+    private TableView<Invoice> reportTable;
     @FXML
-    private TableColumn<Category, Long> idColumn;
+    private TableColumn<Invoice, Long> idColumn;
     @FXML
-    private TableColumn<Category, String> typeColumn, descriptionColumn;
+    private TableColumn<Invoice, String> employeeColumn, dateColumn;
+    @FXML
+    private TableColumn<Invoice, Double> totalColumn, vatColumn, discountColumn, 
+            payableColumn, paidColumn, returnedColumn;
     @FXML
     private TextField searchField;
     @FXML
-    private Button editButton, deleteButton;
-    private CategoryDaoImpl model;
+    private Button viewButton;
+    private InvoiceDaoImpl model;
 
     private double xOffset = 0;
     private double yOffset = 0;
-
+    
     @FXML
     private Button menu;
     @FXML
@@ -57,59 +59,57 @@ public class CategoryController implements Initializable, CategoryInterface {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        model = new CategoryDaoImpl();
-
+        model = new InvoiceDaoImpl();
+        
         drawerAction();
         loadData();
 
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
-        typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
-        descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
-
-        categoryTable.setItems(CATEGORYLIST);
+        employeeColumn.setCellValueFactory((TableColumn.CellDataFeatures<Invoice, String> p)
+                -> new SimpleStringProperty(p.getValue().getEmployee().getUserName()));
+        totalColumn.setCellValueFactory(new PropertyValueFactory<>("total"));
+        vatColumn.setCellValueFactory(new PropertyValueFactory<>("vat"));
+        discountColumn.setCellValueFactory(new PropertyValueFactory<>("discount"));
+        payableColumn.setCellValueFactory(new PropertyValueFactory<>("payable"));
+        paidColumn.setCellValueFactory(new PropertyValueFactory<>("paid"));
+        returnedColumn.setCellValueFactory(new PropertyValueFactory<>("returned"));
+        dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
+        reportTable.setItems(REPORTLIST);
 
         filterData();
 
-        editButton
+        viewButton
                 .disableProperty()
-                .bind(Bindings.isEmpty(categoryTable.getSelectionModel().getSelectedItems()));
-        deleteButton
-                .disableProperty()
-                .bind(Bindings.isEmpty(categoryTable.getSelectionModel().getSelectedItems()));
+                .bind(Bindings.isEmpty(reportTable.getSelectionModel().getSelectedItems()));
     }
 
     private void filterData() {
-        FilteredList<Category> searchedData = new FilteredList<>(CATEGORYLIST, e -> true);
+        FilteredList<Invoice> searchedData = new FilteredList<>(REPORTLIST, e -> true);
         searchField.setOnKeyReleased(e -> {
             searchField.textProperty().addListener((observable, oldValue, newValue) -> {
-                searchedData.setPredicate(category -> {
+                searchedData.setPredicate(report -> {
                     if (newValue == null || newValue.isEmpty()) {
                         return true;
                     }
                     String lowerCaseFilter = newValue.toLowerCase();
-                    if (category.getType().toLowerCase().contains(lowerCaseFilter)) {
-                        return true;
-                    } else if (category.getDescription().toLowerCase().contains(lowerCaseFilter)) {
-                        return true;
-                    }
-                    return false;
+                    return report.getEmployee().getUserName().toLowerCase().contains(lowerCaseFilter);
                 });
             });
 
-            SortedList<Category> sortedData = new SortedList<>(searchedData);
-            sortedData.comparatorProperty().bind(categoryTable.comparatorProperty());
-            categoryTable.setItems(sortedData);
+            SortedList<Invoice> sortedData = new SortedList<>(searchedData);
+            sortedData.comparatorProperty().bind(reportTable.comparatorProperty());
+            reportTable.setItems(sortedData);
         });
     }
-
-    private void loadData() {
-
-        if (!CATEGORYLIST.isEmpty()) {
-            CATEGORYLIST.clear();
+    
+    private void loadData(){
+    
+        if (!REPORTLIST.isEmpty()) {
+            REPORTLIST.clear();
         }
-        CATEGORYLIST.addAll(model.getCategories());
+        REPORTLIST.addAll(model.getInvoices());
     }
-
+    
     private void drawerAction() {
 
         TranslateTransition openNav = new TranslateTransition(new Duration(350), drawer);
@@ -131,14 +131,19 @@ public class CategoryController implements Initializable, CategoryInterface {
 
     @FXML
     public void adminAction(ActionEvent event) throws Exception {
-
         windows("/fxml/Admin.fxml", "Admin", event);
     }
-
+    
     @FXML
     public void productAction(ActionEvent event) throws Exception {
 
-        windows("/fxml/Product.fxml", "Product", event);
+        windows("/fxml/Admin.fxml", "Admin", event);
+    }
+    
+    @FXML
+    public void categoryAction(ActionEvent event) throws Exception {
+
+        windows("/fxml/Category.fxml", "Category", event);
     }
 
     @FXML
@@ -157,12 +162,7 @@ public class CategoryController implements Initializable, CategoryInterface {
     public void supplierAction(ActionEvent event) throws Exception {
         windows("/fxml/Supplier.fxml", "Supplier", event);
     }
-
-    @FXML
-    public void reportAction(ActionEvent event) throws Exception {
-        windows("/fxml/Report.fxml", "Report", event);
-    }
-
+    
     @FXML
     public void staffAction(ActionEvent event) throws Exception {
         windows("/fxml/Employee.fxml", "Employee", event);
@@ -187,6 +187,7 @@ public class CategoryController implements Initializable, CategoryInterface {
         stage.initStyle(StageStyle.UNDECORATED);
         stage.setScene(scene);
         stage.show();
+
     }
 
     private void windows(String path, String title, ActionEvent event) throws Exception {
@@ -204,34 +205,11 @@ public class CategoryController implements Initializable, CategoryInterface {
     }
 
     @FXML
-    public void addAction(ActionEvent event) throws Exception {
+    public void viewAction(ActionEvent event) throws IOException {
 
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/category/Add.fxml"));
-        Scene scene = new Scene(root);
-        Stage stage = new Stage();
-        root.setOnMousePressed((MouseEvent e) -> {
-            xOffset = e.getSceneX();
-            yOffset = e.getSceneY();
-        });
-        root.setOnMouseDragged((MouseEvent e) -> {
-            stage.setX(e.getScreenX() - xOffset);
-            stage.setY(e.getScreenY() - yOffset);
-        });
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setTitle("New Category");
-        stage.getIcons().add(new Image("/images/logo.png"));
-        stage.initStyle(StageStyle.UNDECORATED);
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    @FXML
-    public void editAction(ActionEvent event) throws Exception {
-
-        Category selectedCategory = categoryTable.getSelectionModel().getSelectedItem();
-        int selectedCategoryId = categoryTable.getSelectionModel().getSelectedIndex();
-        FXMLLoader loader = new FXMLLoader((getClass().getResource("/fxml/category/Edit.fxml")));
-        EditController controller = new EditController();
+        Invoice selectedInvoice = reportTable.getSelectionModel().getSelectedItem();
+        FXMLLoader loader = new FXMLLoader((getClass().getResource("/fxml/report/View.fxml")));
+        ViewController controller = new ViewController();
         loader.setController(controller);
         Parent root = loader.load();
         Scene scene = new Scene(root);
@@ -245,31 +223,12 @@ public class CategoryController implements Initializable, CategoryInterface {
             stage.setY(e.getScreenY() - yOffset);
         });
         stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setTitle("Edit Category");
+        stage.setTitle("View Details");
         stage.getIcons().add(new Image("/images/logo.png"));
         stage.initStyle(StageStyle.UNDECORATED);
         stage.setScene(scene);
         stage.show();
-        controller.setCategory(selectedCategory, selectedCategoryId);
-        categoryTable.getSelectionModel().clearSelection();
-    }
-
-    @FXML
-    public void deleteAction(ActionEvent event) {
-
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Delete");
-        alert.setHeaderText("Delete Product");
-        alert.setContentText("Are you sure?");
-
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == ButtonType.OK) {
-            Category selectedCategory = categoryTable.getSelectionModel().getSelectedItem();
-
-            model.deleteCategory(selectedCategory);
-            CATEGORYLIST.remove(selectedCategory);
-        }
-
-        categoryTable.getSelectionModel().clearSelection();
+        controller.setReport(selectedInvoice);
+        reportTable.getSelectionModel().clearSelection();
     }
 }

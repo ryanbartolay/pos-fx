@@ -1,9 +1,12 @@
 package com.bartolay.inventory.controller.pos;
 
-import com.rafsan.inventory.dao.impl.ProductDaoImpl;
-import com.rafsan.inventory.entity.Item;
-import com.rafsan.inventory.entity.Payment;
-import com.rafsan.inventory.entity.Product;
+import com.bartolay.inventory.dao.impl.ProductDaoImpl;
+import com.bartolay.inventory.entity.Item;
+import com.bartolay.inventory.entity.Payment;
+import com.bartolay.inventory.entity.Product;
+import com.bartolay.inventory.interfaces.ProductInterface;
+
+import static com.bartolay.inventory.interfaces.ProductInterface.PRODUCTLIST;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -30,8 +33,6 @@ import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.Node;
-import com.rafsan.inventory.interfaces.ProductInterface;
-import static com.rafsan.inventory.interfaces.ProductInterface.PRODUCTLIST;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.StageStyle;
 

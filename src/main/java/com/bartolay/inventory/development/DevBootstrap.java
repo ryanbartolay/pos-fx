@@ -3,11 +3,11 @@ package com.bartolay.inventory.development;
 import org.hibernate.Session;
 
 import com.bartolay.inventory.HibernateUtil;
+import com.bartolay.inventory.entity.Category;
+import com.bartolay.inventory.entity.Employee;
+import com.bartolay.inventory.entity.Product;
+import com.bartolay.inventory.entity.Supplier;
 import com.bartolay.inventory.utils.StringUtils;
-import com.rafsan.inventory.entity.Category;
-import com.rafsan.inventory.entity.Employee;
-import com.rafsan.inventory.entity.Product;
-import com.rafsan.inventory.entity.Supplier;
 
 public class DevBootstrap {
 

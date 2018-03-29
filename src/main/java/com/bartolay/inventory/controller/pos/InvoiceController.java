@@ -1,14 +1,14 @@
 package com.bartolay.inventory.controller.pos;
 
-import com.rafsan.inventory.dao.impl.EmployeeDaoImpl;
-import com.rafsan.inventory.dao.impl.InvoiceDaoImpl;
-import com.rafsan.inventory.dao.impl.ProductDaoImpl;
-import com.rafsan.inventory.dao.impl.SalesDaoImpl;
-import com.rafsan.inventory.entity.Invoice;
-import com.rafsan.inventory.entity.Item;
-import com.rafsan.inventory.entity.Payment;
-import com.rafsan.inventory.entity.Product;
-import com.rafsan.inventory.entity.Sale;
+import com.bartolay.inventory.dao.impl.EmployeeDaoImpl;
+import com.bartolay.inventory.dao.impl.InvoiceDaoImpl;
+import com.bartolay.inventory.dao.impl.ProductDaoImpl;
+import com.bartolay.inventory.dao.impl.SalesDaoImpl;
+import com.bartolay.inventory.entity.Invoice;
+import com.bartolay.inventory.entity.Item;
+import com.bartolay.inventory.entity.Payment;
+import com.bartolay.inventory.entity.Product;
+import com.bartolay.inventory.entity.Sale;
 
 import java.net.URL;
 import java.sql.Timestamp;

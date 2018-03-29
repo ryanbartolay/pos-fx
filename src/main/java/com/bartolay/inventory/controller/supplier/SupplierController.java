@@ -1,8 +1,8 @@
-package com.bartolay.inventory.controller.category;
+package com.bartolay.inventory.controller.supplier;
 
-import com.bartolay.inventory.dao.impl.CategoryDaoImpl;
-import com.bartolay.inventory.entity.Category;
-import com.bartolay.inventory.interfaces.CategoryInterface;
+import com.bartolay.inventory.dao.impl.SupplierDaoImpl;
+import com.bartolay.inventory.entity.Supplier;
+import com.bartolay.inventory.interfaces.SupplierInterface;
 
 import java.net.URL;
 import java.util.Optional;
@@ -33,23 +33,23 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
-public class CategoryController implements Initializable, CategoryInterface {
+public class SupplierController implements Initializable, SupplierInterface {
 
     @FXML
-    private TableView<Category> categoryTable;
+    private TableView<Supplier> supplierTable;
     @FXML
-    private TableColumn<Category, Long> idColumn;
+    private TableColumn<Supplier, Long> idColumn;
     @FXML
-    private TableColumn<Category, String> typeColumn, descriptionColumn;
+    private TableColumn<Supplier, String> nameColumn, phoneColumn, addressColumn;
     @FXML
     private TextField searchField;
     @FXML
     private Button editButton, deleteButton;
-    private CategoryDaoImpl model;
-
+    private SupplierDaoImpl model;
+    
     private double xOffset = 0;
     private double yOffset = 0;
-
+    
     @FXML
     private Button menu;
     @FXML
@@ -57,61 +57,65 @@ public class CategoryController implements Initializable, CategoryInterface {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        model = new CategoryDaoImpl();
-
+        model = new SupplierDaoImpl();
+        
         drawerAction();
         loadData();
 
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
-        typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
-        descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        phoneColumn.setCellValueFactory(new PropertyValueFactory<>("phone"));
+        addressColumn.setCellValueFactory(new PropertyValueFactory<>("address"));
 
-        categoryTable.setItems(CATEGORYLIST);
+        supplierTable.setItems(SUPPLIERLIST);
 
         filterData();
-
+        
         editButton
                 .disableProperty()
-                .bind(Bindings.isEmpty(categoryTable.getSelectionModel().getSelectedItems()));
+                .bind(Bindings.isEmpty(supplierTable.getSelectionModel().getSelectedItems()));
         deleteButton
                 .disableProperty()
-                .bind(Bindings.isEmpty(categoryTable.getSelectionModel().getSelectedItems()));
+                .bind(Bindings.isEmpty(supplierTable.getSelectionModel().getSelectedItems()));
     }
 
     private void filterData() {
-        FilteredList<Category> searchedData = new FilteredList<>(CATEGORYLIST, e -> true);
+        FilteredList<Supplier> searchedData = new FilteredList<>(SUPPLIERLIST, e -> true);
         searchField.setOnKeyReleased(e -> {
             searchField.textProperty().addListener((observable, oldValue, newValue) -> {
-                searchedData.setPredicate(category -> {
+                searchedData.setPredicate(supplier -> {
                     if (newValue == null || newValue.isEmpty()) {
                         return true;
                     }
                     String lowerCaseFilter = newValue.toLowerCase();
-                    if (category.getType().toLowerCase().contains(lowerCaseFilter)) {
+                    if (supplier.getName().toLowerCase().contains(lowerCaseFilter)) {
                         return true;
-                    } else if (category.getDescription().toLowerCase().contains(lowerCaseFilter)) {
+                    } else if (supplier.getAddress().toLowerCase().contains(lowerCaseFilter)) {
+                        return true;
+                    } else if (supplier.getPhone().toLowerCase().contains(lowerCaseFilter)) {
                         return true;
                     }
                     return false;
                 });
             });
 
-            SortedList<Category> sortedData = new SortedList<>(searchedData);
-            sortedData.comparatorProperty().bind(categoryTable.comparatorProperty());
-            categoryTable.setItems(sortedData);
+            SortedList<Supplier> sortedData = new SortedList<>(searchedData);
+            sortedData.comparatorProperty().bind(supplierTable.comparatorProperty());
+            supplierTable.setItems(sortedData);
         });
     }
 
-    private void loadData() {
-
-        if (!CATEGORYLIST.isEmpty()) {
-            CATEGORYLIST.clear();
+    private void loadData(){
+    
+        if (!SUPPLIERLIST.isEmpty()) {
+            SUPPLIERLIST.clear();
         }
-        CATEGORYLIST.addAll(model.getCategories());
+        
+        SUPPLIERLIST.addAll(model.getSuppliers());
     }
-
+    
     private void drawerAction() {
-
+    
         TranslateTransition openNav = new TranslateTransition(new Duration(350), drawer);
         openNav.setToX(0);
         TranslateTransition closeNav = new TranslateTransition(new Duration(350), drawer);
@@ -128,17 +132,22 @@ public class CategoryController implements Initializable, CategoryInterface {
             }
         });
     }
-
+    
     @FXML
     public void adminAction(ActionEvent event) throws Exception {
-
         windows("/fxml/Admin.fxml", "Admin", event);
     }
-
+    
     @FXML
     public void productAction(ActionEvent event) throws Exception {
 
         windows("/fxml/Product.fxml", "Product", event);
+    }
+    
+    @FXML
+    public void categoryAction(ActionEvent event) throws Exception {
+
+        windows("/fxml/Category.fxml", "Category", event);
     }
 
     @FXML
@@ -152,17 +161,12 @@ public class CategoryController implements Initializable, CategoryInterface {
 
         windows("/fxml/Sales.fxml", "Sales", event);
     }
-
-    @FXML
-    public void supplierAction(ActionEvent event) throws Exception {
-        windows("/fxml/Supplier.fxml", "Supplier", event);
-    }
-
+    
     @FXML
     public void reportAction(ActionEvent event) throws Exception {
         windows("/fxml/Report.fxml", "Report", event);
     }
-
+    
     @FXML
     public void staffAction(ActionEvent event) throws Exception {
         windows("/fxml/Employee.fxml", "Employee", event);
@@ -202,11 +206,11 @@ public class CategoryController implements Initializable, CategoryInterface {
         stage.setScene(scene);
         stage.show();
     }
-
+    
     @FXML
     public void addAction(ActionEvent event) throws Exception {
-
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/category/Add.fxml"));
+    
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/supplier/Add.fxml"));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         root.setOnMousePressed((MouseEvent e) -> {
@@ -218,7 +222,7 @@ public class CategoryController implements Initializable, CategoryInterface {
             stage.setY(e.getScreenY() - yOffset);
         });
         stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setTitle("New Category");
+        stage.setTitle("New Supplier");
         stage.getIcons().add(new Image("/images/logo.png"));
         stage.initStyle(StageStyle.UNDECORATED);
         stage.setScene(scene);
@@ -228,9 +232,9 @@ public class CategoryController implements Initializable, CategoryInterface {
     @FXML
     public void editAction(ActionEvent event) throws Exception {
 
-        Category selectedCategory = categoryTable.getSelectionModel().getSelectedItem();
-        int selectedCategoryId = categoryTable.getSelectionModel().getSelectedIndex();
-        FXMLLoader loader = new FXMLLoader((getClass().getResource("/fxml/category/Edit.fxml")));
+        Supplier selectedSupplier = supplierTable.getSelectionModel().getSelectedItem();
+        int selectedSupplierId = supplierTable.getSelectionModel().getSelectedIndex();
+        FXMLLoader loader = new FXMLLoader((getClass().getResource("/fxml/supplier/Edit.fxml")));
         EditController controller = new EditController();
         loader.setController(controller);
         Parent root = loader.load();
@@ -245,31 +249,32 @@ public class CategoryController implements Initializable, CategoryInterface {
             stage.setY(e.getScreenY() - yOffset);
         });
         stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setTitle("Edit Category");
+        stage.setTitle("Update Details");
         stage.getIcons().add(new Image("/images/logo.png"));
         stage.initStyle(StageStyle.UNDECORATED);
         stage.setScene(scene);
         stage.show();
-        controller.setCategory(selectedCategory, selectedCategoryId);
-        categoryTable.getSelectionModel().clearSelection();
+        controller.setSupplier(selectedSupplier, selectedSupplierId);
+        supplierTable.getSelectionModel().clearSelection();
     }
 
     @FXML
     public void deleteAction(ActionEvent event) {
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Delete");
-        alert.setHeaderText("Delete Product");
+        alert.setTitle("Remove");
+        alert.setHeaderText("Remove Supplier");
         alert.setContentText("Are you sure?");
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.OK) {
-            Category selectedCategory = categoryTable.getSelectionModel().getSelectedItem();
+            Supplier selectedSupplier = supplierTable.getSelectionModel().getSelectedItem();
 
-            model.deleteCategory(selectedCategory);
-            CATEGORYLIST.remove(selectedCategory);
+            model.deleteSuplier(selectedSupplier);
+            SUPPLIERLIST.remove(selectedSupplier);
         }
 
-        categoryTable.getSelectionModel().clearSelection();
+        supplierTable.getSelectionModel().clearSelection();
     }
+    
 }

@@ -1,8 +1,8 @@
 package com.bartolay.inventory.controller.employee;
 
-import com.rafsan.inventory.dao.impl.EmployeeDaoImpl;
-import com.rafsan.inventory.entity.Employee;
-import com.rafsan.inventory.interfaces.EmployeeInterface;
+import com.bartolay.inventory.dao.impl.EmployeeDaoImpl;
+import com.bartolay.inventory.entity.Employee;
+import com.bartolay.inventory.interfaces.EmployeeInterface;
 
 import java.net.URL;
 import java.util.ResourceBundle;

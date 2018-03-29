@@ -1,7 +1,8 @@
 package com.bartolay.inventory.controller.pos;
 
-import com.rafsan.inventory.entity.Item;
-import com.rafsan.inventory.pdf.PrintInvoice;
+import com.bartolay.inventory.entity.Item;
+import com.bartolay.inventory.pdf.PrintInvoice;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;

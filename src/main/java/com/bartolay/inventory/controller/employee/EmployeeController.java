@@ -1,10 +1,10 @@
 package com.bartolay.inventory.controller.employee;
 
-import com.rafsan.inventory.interfaces.EmployeeInterface;
-import static com.rafsan.inventory.interfaces.EmployeeInterface.EMPLOYEELIST;
+import com.bartolay.inventory.dao.impl.EmployeeDaoImpl;
+import com.bartolay.inventory.entity.Employee;
+import com.bartolay.inventory.interfaces.EmployeeInterface;
 
-import com.rafsan.inventory.dao.impl.EmployeeDaoImpl;
-import com.rafsan.inventory.entity.Employee;
+import static com.bartolay.inventory.interfaces.EmployeeInterface.EMPLOYEELIST;
 
 import java.net.URL;
 import java.util.Optional;

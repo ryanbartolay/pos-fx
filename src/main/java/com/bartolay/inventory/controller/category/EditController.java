@@ -1,8 +1,8 @@
 package com.bartolay.inventory.controller.category;
 
-import com.rafsan.inventory.dao.impl.CategoryDaoImpl;
-import com.rafsan.inventory.entity.Category;
-import com.rafsan.inventory.interfaces.CategoryInterface;
+import com.bartolay.inventory.dao.impl.CategoryDaoImpl;
+import com.bartolay.inventory.entity.Category;
+import com.bartolay.inventory.interfaces.CategoryInterface;
 
 import java.net.URL;
 import java.util.ResourceBundle;

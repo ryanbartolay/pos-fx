@@ -1,9 +1,9 @@
 package com.bartolay.inventory.controller.admin;
 
-import com.rafsan.inventory.dao.impl.InvoiceDaoImpl;
-import com.rafsan.inventory.dao.impl.ProductDaoImpl;
-import com.rafsan.inventory.entity.Invoice;
-import com.rafsan.inventory.entity.Product;
+import com.bartolay.inventory.dao.impl.InvoiceDaoImpl;
+import com.bartolay.inventory.dao.impl.ProductDaoImpl;
+import com.bartolay.inventory.entity.Invoice;
+import com.bartolay.inventory.entity.Product;
 
 import java.net.URL;
 import java.text.DateFormatSymbols;
